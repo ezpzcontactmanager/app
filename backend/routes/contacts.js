@@ -11,7 +11,7 @@ const User = require("../model/User");
 //@desc Get all contacts
 //@access Public
 
-router.get('/', auth, async(req, res) => {
+router.get('/', async(req, res) => {
 
     try {
         // request.user is getting fetched from Middleware after token authentication

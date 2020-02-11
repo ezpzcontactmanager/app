@@ -1,16 +1,16 @@
 require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
-const user = require("./routes/user");
-const contacts = require("./routes/contacts");
-const InitiateMongoServer = require("./config/db");
+const user = require("./backend/routes/user");
+const contacts = require("./backend/routes/contacts");
+const InitiateMongoServer = require("./backend/config/db");
 
 InitiateMongoServer();
 
 const app = express();
 
 // PORT
-const PORT = 5000;
+const PORT =  5000;
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
