@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Form, Container, FormGroup, Label, Alert, Input, Button, Fade, ButtonGroup, Jumbotron, Badge, UncontrolledAlert } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,72 @@ import axios from 'axios';
 
 var token = '';
 var errorMsg = '';
+var _username = '';
+var _password = '';
+
+// function ConditionalLink(props){
+    
+//     async function onLogin(props){
+
+//         const loginDetails = {
+//             username: _username,
+//             password: _password
+//         };
+
+//         console.log("The username is " , loginDetails.username);
+//         console.log("The password is " , loginDetails.password);
+
+//         await axios.post("http://localhost:5000/login", loginDetails)
+//                 .then(res => (token = res.data.token))
+//                 .catch(error => errorMsg = error.response.data.message);
+
+//         // this.setState({
+//         //     userError: false,
+//         //     passError: false
+//         // })
+        
+//         if (errorMsg)
+//         {
+//             // this.setState({
+//             //     alert: true
+//             // });
+
+//             console.log(errorMsg);
+//             if (errorMsg.localeCompare("Username not found") == 0)
+//             {
+//                 // this.setState({
+//                 //     userError: true
+//                 // })
+//             }
+
+//             if (errorMsg.localeCompare("Incorrect Password") == 0)
+//             {
+//                 // this.setState({
+//                 //     passError: true
+//                 // })
+//             }
+
+//             return null;
+//         }
+
+//         ConditionalLink();
+//     }
+
+//     if (token){
+//         return (
+//             <Link to ='/mainpage'>
+//                 <Button color="primary" size="lg" onClick={onLogin}>Log In</Button>{''}
+//             </Link>
+//         )
+//     }
+//     else{
+//         return(
+//             <div>
+//                 <Button color="primary" size="lg" onClick={onLogin}>Log In</Button>{''}
+//             </div>
+//         )
+//     }
+// }
 
 function UserAlertBanner(props){
 
@@ -51,6 +117,8 @@ class LogInCredentials extends Component {
         this.state = {
             username: '',
             password: '' ,
+            token: '',
+            loginAllow: false,
             alert: false,
             userError: false,
             passError: false,
@@ -66,24 +134,25 @@ class LogInCredentials extends Component {
         this.setState({
             username: e.target.value
         });
+        _username = e.target.value;
     }
 
     onChangePassword(e){
         this.setState({
             password: e.target.value
         });
+        _password = e.target.value;
     }
 
-
-    async onLogin(){
+    onLogin = async event => {
 
         const loginDetails = {
             username: this.state.username,
             password: this.state.password
         };
 
-        axios.post("http://localhost:5000/login", loginDetails)
-                .then(res => this.props.callback(res.data.token))
+        await axios.post("http://localhost:5000/login", loginDetails)
+                .then(res => (this.setState({token: res.data.token, loginAllow: true}), this.props.callback(res.data.token)))
                 .catch(error => errorMsg = error.response.data.message);
 
         this.setState({
@@ -116,7 +185,11 @@ class LogInCredentials extends Component {
         }
     }
 
-    render() {
+    render() { 
+
+        const ConditionalLink = ({ children, to, condition }) => (condition && to)
+            ? <Link to={to}>{children}</Link> : <>{children}</>;
+        
         return(
             <div>
                 <Container>
@@ -147,9 +220,11 @@ class LogInCredentials extends Component {
                         </FormGroup>
                         <br></br>
                         <ButtonGroup>
-                            <Link to ="/mainpage">
-                                <Button color="primary" size="lg" onClick={this.onLogin}>Log In</Button>{''}
-                            </Link>
+                            <ConditionalLink 
+                                children={<Button color="primary" size="lg" onClick={this.onLogin}>Log In</Button>} 
+                                to='/mainpage' 
+                                condition={this.state.loginAllow}>
+                            </ConditionalLink>
                         </ButtonGroup>
                         <div>
                             <br></br>

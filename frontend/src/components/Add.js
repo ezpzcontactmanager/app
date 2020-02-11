@@ -44,16 +44,17 @@ class Add extends React.Component
         });
     }
 
-    onAdd(e){
+    onAdd = async event =>{
 
         const contactInfo = {
             first: this.state.firstname,
             last: this.state.lastname,
             phone: this.state.phone,
             note: this.state.notes,
+            id: this.props.id
         }
 
-        axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => console.log(res.data))
+        await axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => console.log(res.data))
             .catch(error => console.log(error.response));
     }
 

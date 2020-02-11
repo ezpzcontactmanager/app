@@ -24,15 +24,17 @@ class NavigationBar extends Component
 
     getUser = async event =>{
 
-      var token = this.props.token;
+    }
+
+    async componentDidMount(){
+      // var token = this.props.token;
       
-      await axios.get("http://localhost:5000/me", {headers: {Authorization: token}})
-            .then(res => (this.id = JSON.stringify(res.data._id), this.username = JSON.stringify(res.data.username)))
-            .catch(error => console.log(error));
+      // await axios.get("http://localhost:5000/me", {headers: {Authorization: token}})
+      //       .then(res => (this.id = JSON.stringify(res.data._id), this.username = JSON.stringify(res.data.username)))
+      //       .catch(error => console.log(error));
 
-      console.log(this.id);
-      console.log(this.username);
-
+      // console.log(this.id);
+      // console.log(this.username);
     }
 
     render(){

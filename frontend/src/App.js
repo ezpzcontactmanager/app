@@ -14,10 +14,9 @@ class App extends Component{
     this.tokenCollector = this.tokenCollector.bind(this);
   }
 
-  tokenCollector = (token) => {
+  tokenCollector(token){
 
-    this.setState({ userToken: token });
-    this.forceUpdate();
+     this.setState({ userToken: token });
   }
 
   render(){
@@ -28,7 +27,7 @@ class App extends Component{
           <Switch>
             <Route exact path="/" render={props=><LoginCredentials callback={this.tokenCollector}></LoginCredentials>}/>  
             <Route exact path="/signup" component={SignUp}/>
-            <Route exact path ="/mainpage" render={props=><MainPage test='2' token={this.state.userToken} {...props}></MainPage>}/>
+            <Route exact path ="/mainpage" render={props=><MainPage token={this.state.userToken} {...props}></MainPage>}/>
           </Switch>
         </div>
       </BrowserRouter>

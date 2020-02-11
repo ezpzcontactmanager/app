@@ -6,7 +6,6 @@ import { tablePaging, selectRow, cellEdit, nullChecker, rowEvents} from './Pagin
 import {View} from 'react-native';
 import { Input, Button } from 'reactstrap';
 import axios from 'axios';
-
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import '../App.css';
 
@@ -100,6 +99,14 @@ class ContactList extends Component{
         this.setState({
             lastname: e.target.value
         });
+    }
+
+    async componentDidMount(){
+        console.log("In contacts list id is ", this.props.id);
+        
+        await axios.get("http://localhost:5000/me/contacts", this.props.id)
+                    .then(res => console.log("GOOD"))
+                    .catch(error => console.log(error.response.data.message));
     }
 
     render() {
