@@ -15,7 +15,8 @@ class MainPage extends Component
 
         this.state = {
             userToken: '',
-            id: ''
+            id: '',
+            username: ''
         };
 
         this.setState({userToken: this.props.token});
@@ -26,23 +27,25 @@ class MainPage extends Component
         var token = this.props.token;
 
         await axios.get("http://localhost:5000/me", {headers: {Authorization: token}})
-                    .then(res => this.setState({id: res.data._id}))
+                    .then(res => this.setState({id: res.data._id, username: res.data.username}))
                     .catch(error => console.log(error));
 
+        this.setState({userToken: this.props.token});
         console.log("Token is ", token);
         console.log("ID is ", this.state.id);
+        console.log("User is ", this.state.username);
     }
 
     render()
     {
-        if (!this.state.id)
+        if (!this.state.id && !this.state.username)
         {
             return null;
         }
-        
+
         return(
             <div id='MainPageDiv'>
-                <NavigationBar token={this.state.userToken}></NavigationBar>
+                <NavigationBar username={this.state.username}></NavigationBar>
                 <SplitPane
                 style={{marginBottom:20 + "px"}}
                 split="vertical"
@@ -50,7 +53,7 @@ class MainPage extends Component
                 defaultSize={parseInt(localStorage.getItem('splitPos'), 10)}
                 onChange={size => localStorage.setItem('splitPos', size)}
                 >
-                <ContactList initialSize="85%" id={this.state.id}></ContactList>
+                <ContactList initialSize="85%" token={this.props.token} userid={this.state.id}></ContactList>
                 <Add token={this.state.userToken}></Add>
                 </SplitPane> 
             </div>

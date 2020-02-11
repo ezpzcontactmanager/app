@@ -102,10 +102,11 @@ class ContactList extends Component{
     }
 
     async componentDidMount(){
-        console.log("In contacts list id is ", this.props.id);
         
-        await axios.get("http://localhost:5000/me/contacts", this.props.id)
-                    .then(res => console.log("GOOD"))
+        var userid = this.props.id
+        
+        await axios.get("http://localhost:5000/me/contacts", userid)
+                    .then(res => console.log(res))
                     .catch(error => console.log(error.response.data.message));
     }
 

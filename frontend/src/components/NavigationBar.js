@@ -5,6 +5,7 @@ import axios from 'axios';
 
 var id = '';
 var username = '';
+var test = 'test';
 
 class NavigationBar extends Component
 {
@@ -27,14 +28,11 @@ class NavigationBar extends Component
     }
 
     async componentDidMount(){
-      // var token = this.props.token;
-      
-      // await axios.get("http://localhost:5000/me", {headers: {Authorization: token}})
-      //       .then(res => (this.id = JSON.stringify(res.data._id), this.username = JSON.stringify(res.data.username)))
-      //       .catch(error => console.log(error));
+        
+      console.log("Username in Nav is ", this.props.username);
 
-      // console.log(this.id);
-      // console.log(this.username);
+      this.setState({username: this.props.username});
+
     }
 
     render(){
@@ -42,7 +40,7 @@ class NavigationBar extends Component
       return(
         <Fade in = {true}>
             <div id='navitgationBar'>
-              <Navbar bg="dark" variant="dark" onLoad={this.getUser(this.state.userToken)}>
+              <Navbar bg="dark" variant="dark">
                 <Navbar.Brand href="#home">Navbar</Navbar.Brand>
                 
                     <Nav className="mr-auto">
@@ -53,7 +51,7 @@ class NavigationBar extends Component
                 <Form inline>
                 
                   <Navbar.Text>
-                    Signed in as: <a>{this.username}</a>
+                    Signed in as: <a>{this.state.username}</a>
                   </Navbar.Text>
                   <Link to = '/'>
                     <Button style={{marginLeft: 20 + 'px'}} variant="outline-primary">Log Out</Button>
