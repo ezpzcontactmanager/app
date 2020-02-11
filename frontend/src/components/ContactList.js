@@ -103,10 +103,11 @@ class ContactList extends Component{
 
     async componentDidMount(){
         
-        var userid = this.props.id
+        var token = this.props.token
         
-        await axios.get("http://localhost:5000/me/contacts", userid)
-                    .then(res => console.log(res))
+        //await axios.get("http://localhost:5000/me/contacts", userid)
+        await axios.get("http://localhost:5000/me/contacts", { headers: { Authorization: `Bearer ${token}` } })
+                    .then(res => console.log(res.data))
                     .catch(error => console.log(error.response.data.message));
     }
 
