@@ -6,7 +6,7 @@ import { tablePaging, selectRow, cellEdit, nullChecker, rowEvents} from './Pagin
 import {View} from 'react-native';
 import { Input, Button } from 'reactstrap';
 import axios from 'axios';
-<<<<<<< HEAD
+
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import '../App.css';
 
@@ -130,7 +130,7 @@ class ContactList extends Component{
                 />
             </div>
         );
->>>>>>> 77ebaf7a84f4832874eb8e091f570eda538ef6c0
+
     }
 }
 export default ContactList;
