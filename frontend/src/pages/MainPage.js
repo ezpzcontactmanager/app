@@ -1,4 +1,5 @@
-import React, { Component } from 'react';import ContactList from '../components/ContactList';
+import React, { Component } from 'react';
+import ContactList from '../components/ContactList';
 import NavigationBar from '../components/NavigationBar';
 import Add from '../components/Add';
 import SplitPane, { Pane } from 'react-split-pane';
@@ -53,16 +54,7 @@ class MainPage extends Component
         return(
             <div id='MainPageDiv'>
                 <NavigationBar username={this.state.username}></NavigationBar>
-                <SplitPane
-                style={{marginBottom:20 + "px"}}
-                split="vertical"
-                minSize={50}
-                defaultSize={parseInt(localStorage.getItem('splitPos'), 10)}
-                onChange={size => localStorage.setItem('splitPos', size)}
-                >
-                <ContactList initialSize="85%" token={this.props.token} userid={this.state.id} addClicked={this.state.addClick}></ContactList>
-                <Add token={this.state.userToken} reload={this.handleAddClick} id={this.state.id}></Add>
-                </SplitPane> 
+                <ContactList token={this.props.token} userid={this.state.id} addClicked={this.state.addClick}></ContactList>
             </div>
         )
     }
