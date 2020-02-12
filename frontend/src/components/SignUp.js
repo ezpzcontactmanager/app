@@ -7,6 +7,19 @@ import axios from 'axios';
 var token = '';
 var errorMsg = '';
 
+function AlertBanner(props){
+
+    if (!props.alert){
+        return null;
+    }
+
+    return (
+        <div>
+            <Alert color='warning'>The username you've entered already exists.</Alert>
+        </div>
+    );
+}
+
 class SignUp extends Component {
 
     constructor(props){
@@ -15,6 +28,8 @@ class SignUp extends Component {
         this.state = {
             username: '',
             password: '',
+            alert: false,
+            signUpAllow: false
         }
 
         this.onChangeUsername = this.onChangeUsername.bind(this);
@@ -38,8 +53,7 @@ class SignUp extends Component {
         console.log(token);
     }
     
-    onSignUp(e){
-        e.preventDefault();
+    onSignUp = async event =>{
 
         console.log('SignUp clicked.');
         console.log('Username is ', this.state.username);
@@ -50,11 +64,31 @@ class SignUp extends Component {
             password: this.state.password
         };
 
-        axios.post("http://localhost:5000/signup", loginDetails).then(res => token = res.data.token)
+        errorMsg = '';
+
+        await axios.post("http://localhost:5000/signup", loginDetails).then(res => console.log(res))
                 .catch(error => errorMsg = error.response.data.msg);
+        
+        this.setState({signUpAllow: true});
+
+        if (errorMsg)
+        {
+            this.setState({
+                alert: true,
+                signUpAllow: false
+            });
+
+            console.log(errorMsg);
+
+            return null;
+        }
     }
 
     render() {
+
+        const ConditionalLink = ({ children, to, condition }) => (condition && to)
+        ? <Link to={to}>{children}</Link> : <>{children}</>;
+
         return (
             <Fade in={true}>
                 <Container> 
@@ -67,6 +101,7 @@ class SignUp extends Component {
                                 <Label for="username" className="float-left" size = "lg">Username: </Label>
                                 <Input type="text" name="username" id="username" placeholder="Please enter your username"
                                         onChange={this.onChangeUsername}></Input>
+                                <AlertBanner alert={this.state.alert}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="password" className="float-left" size = "lg">Password: </Label>
@@ -76,8 +111,11 @@ class SignUp extends Component {
                         </div>
                         <div>
                             <ButtonGroup>
-                                {/* <Link to ="/"><Button color="primary" size="lg">Log In</Button>{''}</Link> Hook up next page */}
-                                <Button color="primary" size="lg" onClick={this.onSignUp}>Sign Up</Button>{''}
+                                    <ConditionalLink
+                                        children={<Button color="primary" size="lg" onClick={this.onSignUp}>Sign Up</Button>}
+                                        to='/'
+                                        condition={this.state.signUpAllow}
+                                    ></ConditionalLink>
                             </ButtonGroup>
                         </div>
                     </Form>
