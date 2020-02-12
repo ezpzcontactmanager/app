@@ -45,6 +45,11 @@ class Add extends React.Component
         });
     }
 
+        
+    clearBoxesFuckYouJeffBezos = () => {
+        document.getElementById("addForm").reset()
+    }
+
     onAdd = async event =>{
 
         const contactInfo = {
@@ -55,6 +60,8 @@ class Add extends React.Component
             userid: this.props.id
         }
 
+        this.clearBoxesFuckYouJeffBezos();
+
         console.log(contactInfo);
 
         await axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => (this.props.reload(), console.log(res)))
@@ -64,14 +71,14 @@ class Add extends React.Component
     render(){
         return(
             <div id="addDiv">
-                <form>
-                <br/>
-                <h1 className="AddTitle">Add Contact</h1><br/>
-                <Input type="text" id="firstname" placeholder="First Name" onChange={this.onFirstChange}></Input> <br/>
-                <Input type="text" id="lastname" placeholder="Last Name" onChange={this.onLastChange}></Input> <br/>
-                <Input type="text" id="phone" placeholder="Phone #" onChange={this.onNumberChange}></Input> <br/>
-                <Input type="text" id="notes" placeholder="Notes" onChange={this.onNotesChange}></Input><br/>
-                <Button outline color = 'info' onClick={this.onAdd}>Submit</Button>
+                <form id="addForm">
+                    <br/>
+                    <h1 className="AddTitle">Add Contact</h1><br/>
+                    <Input type="text" id="firstname" placeholder="First Name" onChange={this.onFirstChange}></Input> <br/>
+                    <Input type="text" id="lastname" placeholder="Last Name" onChange={this.onLastChange}></Input> <br/>
+                    <Input type="text" id="phone" placeholder="Phone #" onChange={this.onNumberChange}></Input> <br/>
+                    <Input type="text" id="notes" placeholder="Notes" onChange={this.onNotesChange}></Input><br/>
+                    <Button outline color = 'info' onClick={this.onAdd}>Submit</Button>
                 </form>
                 <span id="editResult"></span>
             </div>
