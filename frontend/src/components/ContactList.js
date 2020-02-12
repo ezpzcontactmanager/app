@@ -146,7 +146,7 @@ class ContactList extends Component{
                     last: row.last,
                     phone: row.phone,
                     note: row.note,
-                    userid: row._id
+                    userid: this.props.userid
                 }
 
                 await axios.post("http://localhost:5000/me/contacts/edit/" + row._id, contact)
@@ -156,7 +156,6 @@ class ContactList extends Component{
                 this.updateTable();
             }
         });
-
 
         return (
             <div className='ContactListDiv' onContextMenu={(e)=> e.preventDefault()}>
