@@ -2,6 +2,7 @@ import React from 'react';
 import { Input, Button } from 'reactstrap';
 import axios from 'axios';
 import '../App.css';
+import ContactList from './ContactList.js';
 
 class Add extends React.Component
 {
@@ -54,7 +55,9 @@ class Add extends React.Component
             userid: this.props.id
         }
 
-        await axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => console.log(res.data))
+        console.log(contactInfo);
+
+        await axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => (this.props.reload(), console.log(res)))
             .catch(error => console.log(error.response));
     }
 

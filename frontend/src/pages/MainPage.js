@@ -16,7 +16,8 @@ class MainPage extends Component
         this.state = {
             userToken: '',
             id: '',
-            username: ''
+            username: '',
+            addClick: false
         };
 
         this.setState({userToken: this.props.token});
@@ -39,7 +40,7 @@ class MainPage extends Component
     }
 
     async handleAddClick(){
-        this.forceUpdate();
+        this.setState({addClick : true});
     }
 
     render()
@@ -59,8 +60,8 @@ class MainPage extends Component
                 defaultSize={parseInt(localStorage.getItem('splitPos'), 10)}
                 onChange={size => localStorage.setItem('splitPos', size)}
                 >
-                <ContactList initialSize="85%" token={this.props.token} userid={this.state.id}></ContactList>
-                <Add token={this.state.userToken} reload={this.handleAddClick}></Add>
+                <ContactList initialSize="85%" token={this.props.token} userid={this.state.id} addClicked={this.state.addClick}></ContactList>
+                <Add token={this.state.userToken} reload={this.handleAddClick} id={this.state.id}></Add>
                 </SplitPane> 
             </div>
         )

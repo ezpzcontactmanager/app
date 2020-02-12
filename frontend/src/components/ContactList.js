@@ -3,13 +3,16 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { tablePaging, selectRow, nullChecker} from './Paging';
-import {View} from 'react-native';
+import {View, RefreshControl} from 'react-native';
 import { Input, Button } from 'reactstrap';
 import axios from 'axios';
 import '../App.css';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
+
+var _first = '';
+var _last = '';
 
 class ContactList extends Component{
     constructor() {
@@ -58,8 +61,12 @@ class ContactList extends Component{
                 },
         ],
         firstname: '',
-        lastname: ''
+        lastname: '',
       };
+
+
+      this.updateTable = this.updateTable.bind(this);
+      this.filteredUpdate = this.filteredUpdate.bind(this);
       this.onFirstSearchChange = this.onFirstSearchChange.bind(this);
       this.onLastSearchChange = this.onLastSearchChange.bind(this);
     }
@@ -68,19 +75,29 @@ class ContactList extends Component{
         this.setState({
             firstname: e.target.value
         });
+
+        this._first = e.target.value;
+        this.filteredUpdate();        
     }
     
     onLastSearchChange(e){
         this.setState({
             lastname: e.target.value
         });
+
+        this._last = e.target.value
+        this.filteredUpdate();
     }
 
     async componentDidMount(){
         
-        var token = this.props.token
-        
-        await axios.get("http://localhost:5000/me/contacts", { headers: { Authorization: `Bearer ${token}` } })
+        var filterVar = {
+            userid: this.props.userid,
+            first: this.state.firstname,
+            last: this.state.lastname
+        }
+
+        await axios.post("http://localhost:5000/me/contacts/search",  filterVar)
                     .then(res => this.setState({products: res.data}))
                     .catch(error => console.log(error.response.data.message));
     }
@@ -98,6 +115,19 @@ class ContactList extends Component{
         var token = this.props.token
         
         await axios.get("http://localhost:5000/me/contacts", { headers: { Authorization: `Bearer ${token}` } })
+                    .then(res => this.setState({products: res.data}))
+                    .catch(error => console.log(error.response.data.message));
+    }
+
+    async filteredUpdate(){
+
+        var filterVar = {
+            userid: this.props.userid,
+            first: this._first,
+            last: this._last
+        }
+
+        await axios.post("http://localhost:5000/me/contacts/search",  filterVar)
                     .then(res => this.setState({products: res.data}))
                     .catch(error => console.log(error.response.data.message));
     }
@@ -167,7 +197,7 @@ class ContactList extends Component{
                         <Input type="text" id="lastname" placeholder="Last Name" onChange={this.onLastSearchChange}></Input><br/>
                     </View>
                     <View style={{flex:1}, {width:200 + "px"}, {marginLeft:10 + "px"}}>
-                        <Button outline color = 'info' style={{justifyContent: 'flex-end'}}>Search</Button>
+                        {/* <Button onClick={this.filteredUpdate}outline color = 'info' style={{justifyContent: 'flex-end'}}>Search</Button> */}
                     </View>
                 </View>
                 <br></br>
@@ -187,4 +217,5 @@ class ContactList extends Component{
 
     }
 }
+
 export default ContactList;
