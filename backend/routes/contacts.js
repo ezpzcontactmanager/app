@@ -83,10 +83,44 @@ router.delete('/:id', (req, res) => {
         .catch(err => res.status(404).json({success: false}));
 });
 
-//@route GET me/contacts/search
+//@route POST me/contacts/search
 //@desc Search through contacts
 //@access Public
 
+router.post('/search', async (req, res) => {
+    //incoming: userId, fSearch, lSearch
+    //outgoing: results[]
+
+    var fSearch = req.body.first;
+    var lSearch = req.body.last;
+    var uSearch = req.body.userid;
+
+    if(fSearch == null)
+        fSearch = "";
+    if(lSearch == null)
+        lSearch = "";
+    if(uSearch == null)
+        uSearch = "";
+
+
+    const fResults = await Contact.find({first :{$regex:fSearch+'.*', $options:'r'}, last :{$regex:lSearch+'.*', $options:'r'} });
+
+    var results = [];
+
+    for(var i = 0; i < fResults.length; i++)
+    {
+        if(fResults[i].userid == uSearch)
+        {
+            results.push(fResults[i]);
+        }
+    }    
+
+    res.status(200).json(results);
+
+});
+
+
+/*
 router.get('/search', (req, res) => {
     var search = new RegExp(req.body.search, 'ig');
     Contact.aggregate()
@@ -100,7 +134,7 @@ router.get('/search', (req, res) => {
     })
     .match({fullName: search})
     .then(contact => res.json(contact))
-});
+});*/
 
 
 //@route POST me/contacts/edit/:id
