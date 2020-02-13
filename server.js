@@ -29,6 +29,8 @@ app.get("/", (req, res) => {
 app.use("/", user);
 app.use("/me/contacts", contacts)
 
+app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+
 //checking if the server is in production
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('frontend/build'));
