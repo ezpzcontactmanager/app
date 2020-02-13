@@ -184,15 +184,30 @@ class ContactList extends Component{
             userid: this.props.userid
         }
 
-        this.clearBoxes();
+        if (contactInfo.first === '' || contactInfo.last === '' || contactInfo.note === '')
+        {
+            confirmAlert({
+                title: 'Empty Fields',
+                message: 'Please ensure you have entered a value in the First Name, Last Name, and Phone # fields.',
+                buttons: [
+                    {
+                        label: 'Ok'
+                    }
+                ]
+            })
+        }
+        else{
+            this.clearBoxes();
 
-        console.log(contactInfo);
+            console.log(contactInfo);
 
-        await axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => (this.props.reload(), console.log(res)))
-            .catch(error => console.log(error.response));
+            await axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => (this.props.reload(), console.log(res)))
+                .catch(error => console.log(error.response));
 
-        this.setState({firstname: '', lastname: '', phone: '', notes: ''})
-        this.filteredUpdate()
+            this.setState({firstname: '', lastname: '', phone: '', notes: ''})
+            this.filteredUpdate()
+    
+        }
     }
 
     render() {
@@ -214,7 +229,7 @@ class ContactList extends Component{
                                     .then(res => console.log(res))
                                     .catch(error => console.log(error.response));
 
-                        this.updateTable();
+                        this.filteredUpdate();
                       }
                     },
                     {
