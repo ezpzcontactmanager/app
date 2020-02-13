@@ -46,7 +46,7 @@ class Add extends React.Component
     }
 
         
-    clearBoxesFuckYouJeffBezos = () => {
+    clearBoxes = () => {
         document.getElementById("addForm").reset()
     }
 
@@ -60,7 +60,7 @@ class Add extends React.Component
             userid: this.props.id
         }
 
-        this.clearBoxesFuckYouJeffBezos();
+        this.clearBoxes();
 
         console.log(contactInfo);
 
