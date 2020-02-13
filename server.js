@@ -10,7 +10,8 @@ InitiateMongoServer();
 
 const app = express();
 
-// PORT
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 
 app.use(function(req, res, next) {
@@ -29,16 +30,11 @@ app.get("/", (req, res) => {
 app.use("/", user);
 app.use("/me/contacts", contacts)
 
-app.use(express.static(path.join(__dirname, 'frontend', 'build')));
 
-//checking if the server is in production
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static('frontend/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-  })
-}
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/frontend/build/index.html'))
+});
 
 const PORT =  process.env.PORT || 5000;
 
