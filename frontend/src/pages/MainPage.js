@@ -53,7 +53,7 @@ class MainPage extends Component
 
         return(
             <div id='MainPageDiv'>
-                <NavigationBar username={this.state.username}></NavigationBar>
+                <NavigationBar color='#283277' username={this.state.username}></NavigationBar>
                 <ContactList token={this.props.token} userid={this.state.id} addClicked={this.state.addClick}></ContactList>
             </div>
         )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Alert, Form, Container, FormGroup, Label, Input, Button, UncontrolledCarousel, ButtonGroup, Jumbotron, Fade } from 'reactstrap';
+import { Alert, Form, Container, FormGroup, Label, Input, Button, Badge, ButtonGroup, Fade } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 
@@ -103,6 +103,7 @@ class SignUp extends Component {
                                         onChange={this.onChangeUsername}></Input>
                                 <AlertBanner alert={this.state.alert}/>
                             </FormGroup>
+                            <br/>
                             <FormGroup>
                                 <Label for="password" className="float-left" size = "lg">Password: </Label>
                                 <Input type="password" name="password" id="password" placeholder="Please enter your password"
@@ -110,6 +111,7 @@ class SignUp extends Component {
                             </FormGroup>
                         </div>
                         <div>
+                            <br/>
                             <ButtonGroup>
                                     <ConditionalLink
                                         children={<Button color="primary" size="lg" onClick={this.onSignUp}>Sign Up</Button>}
@@ -117,6 +119,12 @@ class SignUp extends Component {
                                         condition={this.state.signUpAllow}
                                     ></ConditionalLink>
                             </ButtonGroup>
+                            <div>
+                            <br></br>
+                            <Link to="/">
+                                <Button color='link'><Badge color='link' size='lg'>Back to Log In</Badge></Button>
+                            </Link>
+                        </div>
                         </div>
                     </Form>
                 </Container>

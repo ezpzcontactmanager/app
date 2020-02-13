@@ -133,13 +133,12 @@ class LogInCredentials extends Component {
                         <div>
                             <Jumbotron fluid>
                                 <Container fluid>
-                                    <h1 className="display-3">Contact Manager</h1>
+                                    <h1 className="display-3">EZ-PZ Contact Manager</h1>
                                 </Container>
                             </Jumbotron>
                         </div>
                     </Fade>
                     <Form>
-                        <br></br>
                         <Fade in={true}>
                         <FormGroup>
                             <Label for="username" className="float-left" size = "lg">Username:</Label>
