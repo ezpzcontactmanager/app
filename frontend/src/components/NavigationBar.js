@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Nav, Navbar, Form, Fade} from 'react-bootstrap'
-import axios from 'axios';
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 var id = '';
 var username = '';
@@ -15,12 +15,14 @@ class NavigationBar extends Component
       this.state ={
         userToken : '',
         usename: '',
-        id: ''
+        id: '',
+        logout: false
       };
 
       this.setState({userToken: this.props.token});
 
       this.getUser = this.getUser.bind(this);
+      this.performLogout = this.performLogout.bind(this);
     }
 
     getUser = async event =>{
@@ -35,7 +37,36 @@ class NavigationBar extends Component
 
     }
 
+    performLogout = () => {
+          confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure you want to logout?',
+            buttons: [
+              {
+                label: 'Yes',
+                // this can be made async (onClick: async () => {})
+                onClick: async() => {
+                  this.setState({logout: true});
+                  window.location.href = ("http://localhost:3000/")
+                  
+                }
+              },
+              {
+                label: 'No',
+                onClick: () => 
+                {
+                    this.setState({logout: false});
+                    console.log("do nothing")
+                }
+              }
+            ]
+          })
+  }
+
     render(){
+
+      const ConditionalLink = ({ children, to, condition }) => (condition && to)
+            ? <Link to={to}>{children}</Link> : <>{children}</>;
 
       return(
         <Fade in = {true}>
@@ -51,9 +82,14 @@ class NavigationBar extends Component
                   <Navbar.Text>
                     Signed in as: <a>{this.state.username}</a>
                   </Navbar.Text>
-                  <Link to = '/'>
-                    <Button style={{marginLeft: 20 + 'px'}} variant="outline-primary">Log Out</Button>
-                  </Link>
+                  {/* <Link to = '/'> */}
+                  <ConditionalLink
+                    children={<Button style={{marginLeft: 20 + 'px'}} variant="outline-primary" onClick={this.performLogout}>Log Out</Button>}
+                    to='/'
+                    condition={this.state.logout}
+                  ></ConditionalLink>
+                    
+                  {/* </Link> */}
                 </Form>
               </Navbar>
               <br/>
