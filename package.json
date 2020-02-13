@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon start & cd ./frontend && npm start",
-    "server": "nodemon start & cd ./frontend && npm start",
+    "start": "nodemon server.js & cd ./frontend && npm start",
+    "server": "nodemon server.js & cd ./frontend && npm start",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false  npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
