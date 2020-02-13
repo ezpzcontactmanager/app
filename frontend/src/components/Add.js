@@ -64,7 +64,7 @@ class Add extends React.Component
 
         console.log(contactInfo);
 
-        await axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => (this.props.reload(), console.log(res)))
+        await axios.post("https://ezpzcontactmanager.herokuapp.com/me/contacts/add", contactInfo).then(res => (this.props.reload(), console.log(res)))
             .catch(error => console.log(error.response));
     }
 

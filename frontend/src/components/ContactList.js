@@ -137,7 +137,7 @@ class ContactList extends Component{
             last: this.state.lastname
         }
 
-        await axios.post("http://localhost:5000/me/contacts/search",  filterVar)
+        await axios.post("https://ezpzcontactmanager.herokuapp.com/me/contacts/search",  filterVar)
                     .then(res => this.setState({products: res.data}))
                     .catch(error => console.log(error.response.data.message));
     }
@@ -154,7 +154,7 @@ class ContactList extends Component{
     async updateTable(){
         var token = this.props.token
         
-        await axios.get("http://localhost:5000/me/contacts", { headers: { Authorization: `Bearer ${token}` } })
+        await axios.get("https://ezpzcontactmanager.herokuapp.com/me/contacts", { headers: { Authorization: `Bearer ${token}` } })
                     .then(res => this.setState({products: res.data}))
                     .catch(error => console.log(error.response.data.message));
     }
@@ -167,7 +167,7 @@ class ContactList extends Component{
             last: this._last
         }
 
-        await axios.post("http://localhost:5000/me/contacts/search",  filterVar)
+        await axios.post("https://ezpzcontactmanager.herokuapp.com/me/contacts/search",  filterVar)
                     .then(res => this.setState({products: res.data}))
                     .catch(error => console.log(error.response.data.message));
 
@@ -201,7 +201,7 @@ class ContactList extends Component{
 
             console.log(contactInfo);
 
-            await axios.post("http://localhost:5000/me/contacts/add", contactInfo).then(res => (this.props.reload(), console.log(res)))
+            await axios.post("https://ezpzcontactmanager.herokuapp.com/me/contacts/add", contactInfo).then(res => (this.props.reload(), console.log(res)))
                 .catch(error => console.log(error.response));
 
             this.setState({firstname: '', lastname: '', phone: '', notes: ''})
@@ -225,7 +225,7 @@ class ContactList extends Component{
         
                         var contact = row._id;
                         
-                        await axios.delete("http://localhost:5000/me/contacts/" + contact)
+                        await axios.delete("https://ezpzcontactmanager.herokuapp.com/me/contacts/" + contact)
                                     .then(res => console.log(res))
                                     .catch(error => console.log(error.response));
 
@@ -256,7 +256,7 @@ class ContactList extends Component{
                     userid: this.props.userid
                 }
 
-                await axios.post("http://localhost:5000/me/contacts/edit/" + row._id, contact)
+                await axios.post("https://ezpzcontactmanager.herokuapp.com/me/contacts/edit/" + row._id, contact)
                             .then(res => console.log(res))
                             .catch(error => console.log(error.response));
 

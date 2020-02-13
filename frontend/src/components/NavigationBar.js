@@ -47,7 +47,7 @@ class NavigationBar extends Component
                 // this can be made async (onClick: async () => {})
                 onClick: async() => {
                   this.setState({logout: true});
-                  window.location.href = ("http://localhost:3000/")
+                  window.location.href = ("https://ezpzcontactmanager.herokuapp.com/")
                   
                 }
               },

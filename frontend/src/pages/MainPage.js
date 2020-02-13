@@ -30,7 +30,7 @@ class MainPage extends Component
 
         var token = this.props.token;
 
-        await axios.get("http://localhost:5000/me", { headers: { Authorization: `Bearer ${token}` } })
+        await axios.get("https://ezpzcontactmanager.herokuapp.com/me", { headers: { Authorization: `Bearer ${token}` } })
                     .then(res => this.setState({id: res.data._id, username: res.data.username}))
                     .catch(error => console.log(error));
 

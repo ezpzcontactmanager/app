@@ -66,7 +66,7 @@ class SignUp extends Component {
 
         errorMsg = '';
 
-        await axios.post("http://localhost:5000/signup", loginDetails).then(res => console.log(res))
+        await axios.post("https://ezpzcontactmanager.herokuapp.com/signup", loginDetails).then(res => console.log(res))
                 .catch(error => errorMsg = error.response.data.msg);
         
         this.setState({signUpAllow: true});

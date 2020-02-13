@@ -87,7 +87,7 @@ class LogInCredentials extends Component {
             password: this.state.password
         };
 
-        await axios.post("http://localhost:5000/login", loginDetails)
+        await axios.post("https://ezpzcontactmanager.herokuapp.com/login", loginDetails)
                 .then(res => (this.setState({token: res.data.token, loginAllow: true}), this.props.callback(res.data.token)))
                 .catch(error => errorMsg = error.response.data.message);
 
